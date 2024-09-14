@@ -1,3 +1,3 @@
-module github.com/ncostamagna/go-happily
+module github.com/ncostamagna/go-multiply
 
 go 1.23.1
