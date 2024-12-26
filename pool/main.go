@@ -55,17 +55,22 @@ func process() {
 	// Create a sync.Pool to manage resources
 	var pool sync.Pool
 	pool.New = func() interface{} {
-			return newResource()
+		fmt.Println("Creating new resource with pool")
+		return newResource()
 	}
 
 	// Function to acquire a resource from the pool
 	getResource := func() *resource {
-			if v := pool.Get(); v != nil {
-				fmt.Println("Using resource from pool")
-				return v.(*resource)
-			}
-			fmt.Println("Using resource from new")
-			return pool.New().(*resource)
+		
+		// when we get a resource from the pool, it's removed from the pool
+		if v := pool.Get(); v != nil {
+			fmt.Printf("Using resource from pool: %p\n", v)
+			return v.(*resource)
+		}
+
+		fmt.Println("Using resource from new")
+		// new value, new address
+		return pool.New().(*resource)
 	}
 
 	// Function to release a resource back to the pool
@@ -75,6 +80,7 @@ func process() {
 
 
 	getWithoutPool := func() *resource {
+		fmt.Println("Creating new resource without pool")
 		return newResource()
 	}
 	// Simulate using resources
