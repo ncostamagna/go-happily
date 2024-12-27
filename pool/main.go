@@ -1,10 +1,10 @@
 package main
 
 import (
-	 "fmt"
-        "math/rand"
 	"bytes"
+	"fmt"
 	"io"
+	"math/rand"
 	"os"
 	"sync"
 	"time"
@@ -38,17 +38,14 @@ func Log(w io.Writer, key, val string) {
 	bufPool.Put(b)
 }
 
-
-
-
-
 // another example
 type resource struct {
 	id int
 }
+
 func newResource() *resource {
 	return &resource{
-			id: rand.Intn(100), // Generate a random ID
+		id: rand.Intn(100), // Generate a random ID
 	}
 }
 func process() {
@@ -61,7 +58,7 @@ func process() {
 
 	// Function to acquire a resource from the pool
 	getResource := func() *resource {
-		
+
 		// when we get a resource from the pool, it's removed from the pool
 		if v := pool.Get(); v != nil {
 			fmt.Printf("Using resource from pool: %p\n", v)
@@ -75,9 +72,8 @@ func process() {
 
 	// Function to release a resource back to the pool
 	releaseResource := func(r *resource) {
-			pool.Put(r)
+		pool.Put(r)
 	}
-
 
 	getWithoutPool := func() *resource {
 		fmt.Println("Creating new resource without pool")
@@ -85,12 +81,12 @@ func process() {
 	}
 	// Simulate using resources
 	for i := 0; i < 10; i++ {
-			r := getResource()
-			r2 := getWithoutPool()
-			fmt.Printf("Using resource with ID from pool: %d\n", r.id)
-			fmt.Printf("Using resource with ID from new: %d\n", r2.id)
-			time.Sleep(time.Millisecond * time.Duration(rand.Intn(100))) // Simulate work
-			releaseResource(r)
+		r := getResource()
+		r2 := getWithoutPool()
+		fmt.Printf("Using resource with ID from pool: %d\n", r.id)
+		fmt.Printf("Using resource with ID from new: %d\n", r2.id)
+		time.Sleep(time.Millisecond * time.Duration(rand.Intn(100))) // Simulate work
+		releaseResource(r)
 	}
 }
 

@@ -1,20 +1,21 @@
 package main
 
 import (
-	 "fmt"
-    "math/rand"
+	"fmt"
+	"math/rand"
 	"sync"
 	"time"
 )
 
 // another example
 type resource struct {
-	id int
+	id    int
 	mutex sync.Mutex
 }
+
 func newResource() *resource {
 	return &resource{
-			id: rand.Intn(100), // Generate a random ID
+		id: rand.Intn(100), // Generate a random ID
 	}
 }
 func process() {
@@ -31,7 +32,7 @@ func process() {
 	wait.Add(10)
 	// Function to acquire a resource from the pool
 	getResource := func() *resource {
-		
+
 		// when we get a resource from the pool, it's removed from the pool
 		if v := pool.Get(); v != nil {
 			fmt.Printf("Using resource from pool: %p\n", v)
